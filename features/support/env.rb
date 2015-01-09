@@ -2,7 +2,7 @@
 
 ENV['RACK_ENV'] = 'test'
 
-require File.join(File.dirname(__FILE__), '..', '..', 'lib/RockPaperScissor.app')
+require File.join(File.dirname(__FILE__), '..', '..', 'lib/rockpaperscissor.rb')
 
 require 'capybara'
 require 'capybara/cucumber'

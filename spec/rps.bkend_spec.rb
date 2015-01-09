@@ -1,8 +1,8 @@
 require 'rps.bkend'
 
-describe RockPaperScissor do
+describe RockPaperScissorGame do
 
-let(:rps) { RockPaperScissor.new }
+let(:rps) { RockPaperScissorGame.new }
 
   it 'returns rock when rock versus scissors' do
     expect(rps.choose(:scissors,:rock)).to eq :rock

@@ -1,4 +1,4 @@
-class RockPaperScissor
+class RockPaperScissorGame
 
   def choose choice1, choice2
     return :tie if choice1 == choice2
@@ -26,6 +26,10 @@ class RockPaperScissor
 
   def scissors_versus choice
     choice == :paper ? :scissors : :rock
+  end
+
+  def self.random_choice
+    [:rock, :paper, :scissors].sample
   end
 
 end

@@ -1,6 +1,10 @@
 <% if @rounds.to_i > 0 %>
-Score: You, <%= session[:you] %>. Computer, <%= session[:computer] %>
+Score: You, <%= session[:score][:you] %>. Opponent, <%= session[:score][:opponent] %>
 Round <%= @rounds %>: Choose!
+
+<% elsif @rounds.to_i == 0 %>
+Score: You, <%= session[:score][:you] %>. Opponent, <%= session[:score][:opponent] %>
+
 <% end %>
 
 <form action='/' method='post'>

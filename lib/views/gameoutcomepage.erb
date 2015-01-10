@@ -1,6 +1,17 @@
 <% if @outcome == :tie %>
-The computer chose <%= "#{@compchoice.to_s}" %>. 
+The opponent chose <%= "#{@compchoice.to_s}" %>. 
 Game was a tie.
+
 <% else %>
-The computer chose <%= "#{@compchoice.to_s}. #{@outcome.to_s.capitalize}" %> wins! 
+The opponent chose <%= "#{@compchoice.to_s}. #{@outcome.to_s.capitalize}" %> wins! 
+<% end %>
+
+<% puts @rounds %>
+<% puts @winner %>
+
+<% if @rounds <= 0 && @roundwinner == :you %>
+You won the game!
+
+<% elsif @rounds <= 0 && @roundwinner == :opponent %>
+The opponent is the winner!
 <% end %>

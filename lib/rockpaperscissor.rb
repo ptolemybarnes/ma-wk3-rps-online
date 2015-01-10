@@ -3,22 +3,20 @@ require_relative 'rps.bkend'
 require 'byebug'
 
 class RockPaperScissor < Sinatra::Base
-use Rack::Session::Cookie, :key => 'rack.session',
-:path => '/',
-:secret => 'secret'
-
+enable :sessions
 rps   = RockPaperScissorGame.new
 
+#######     Routes    ########
+
   get '/' do
-    session[:computer] = 0
-    session[:you] = 0
+    session[:score] = {you: 0, opponent: 0}
     @rounds = params[:rounds]
 
     erb :gamepage
   end
 
   post '/' do
-    @rounds     = (params[:rounds].to_i - 1).to_s
+    @rounds     = params[:rounds].to_i
     @compchoice = RockPaperScissorGame.random_choice
     @yourchoice = params[:choice].to_sym
     @outcome    = rps.choose(@yourchoice, @compchoice)
@@ -27,20 +25,23 @@ rps   = RockPaperScissorGame.new
       @winner     = identify_winner(compchoice: @compchoice,
                                     yourchoice: @yourchoice,
                                     outcome:    @outcome)
+      @rounds -= 1
       add_to_score @winner
     end
 
     erb :gameoutcomepage, :layout => :gamepage
   end
 
+######## Helper Methods ########
+
   helpers do
 
-    def identify_winner args = {}
-      args[:compchoice] == args[:outcome] ? :computer : :you
+    def identify_winner args
+      args[:compchoice] == args[:outcome] ? :opponent : :you
     end
     
     def add_to_score winner
-      session[winner] += 1
+      session[:score][winner] += 1
     end
 
   end

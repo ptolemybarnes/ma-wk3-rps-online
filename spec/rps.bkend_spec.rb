@@ -24,4 +24,13 @@ let(:rps) { RockPaperScissorGame.new }
     expect(rps.choose(:rock ,       :rock )).to eq :tie
     expect(rps.choose(:scissors, :scissors)).to eq :tie
   end
+
+  # context 'a game of 3 rounds' do
+
+  #   it 'returns the winner of best of 3' do
+  #     rps = RockPaperScissorGame.new(3)
+
+
+  #   end
+  # end
 end

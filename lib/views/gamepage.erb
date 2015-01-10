@@ -1,4 +1,5 @@
 <% if @rounds.to_i > 0 %>
+Score: You, <%= session[:score][:you] %>. Computer, <%= session[:score][:computer] %>
 Round <%= @rounds %>: Choose!
 <% end %>
 

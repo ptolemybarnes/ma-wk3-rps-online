@@ -16,6 +16,9 @@ module NavigationHelpers
     when /the home\s?page to play "(.*)" rounds$/
       "/#{$1}"
 
+    when /the score reset page/
+      "/resetscore"
+
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

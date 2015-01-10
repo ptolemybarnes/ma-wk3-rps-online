@@ -22,7 +22,8 @@ I wanted to approach this project with the concept of Minimum Viable Product in 
 
 - Ruby
 - Sinatra
-- Cucumber, RSpec
+- Cucumber
+- RSpec
 
 ## Job List
 

@@ -25,12 +25,11 @@ Feature: Playing rock, paper, scissor
       And I press "rock" and the computer chooses "rock"
       Then I should see "The computer chose rock. Game was a tie."
 
-# Three rounds
-
     Scenario: Player wins in three rounds
       Given I am on the homepage to play "3" rounds
       Then I should see "Round 3: Choose!"
       And I press "rock" and the computer chooses "scissor"
+      Then I should see "Score: You, 1. Computer, 0"
       Then I should see "Round 2: Choose!"
 
     Scenario: Player wins in one round

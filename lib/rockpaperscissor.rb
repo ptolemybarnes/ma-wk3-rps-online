@@ -3,14 +3,17 @@ require_relative 'rps.bkend'
 require 'byebug'
 
 class RockPaperScissor < Sinatra::Base
-enable :sessions
+use Rack::Session::Cookie, :key => 'rack.session',
+:path => '/',
+:secret => 'secret'
 
 rps   = RockPaperScissorGame.new
-SCORE = {you: 0, computer: 0}
 
   get '/*' do
+    session[:computer] = 0
+    session[:you] = 0
     @rounds = params[:splat].sample
-    session[:score] = {you: 0, computer: 0}
+
     erb :gamepage
   end
 
@@ -37,7 +40,7 @@ SCORE = {you: 0, computer: 0}
     end
     
     def add_to_score winner
-      session[:score][winner] += 1
+      session[winner] += 1
     end
 
   end

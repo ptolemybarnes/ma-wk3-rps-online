@@ -1,0 +1,6 @@
+<% if @outcome == :tie %>
+The computer chose <%= "#{@compchoice.to_s}" %>. 
+Game was a tie.
+<% else %>
+The computer chose <%= "#{@compchoice.to_s}. #{@outcome.to_s.capitalize}" %> wins! 
+<% end %>

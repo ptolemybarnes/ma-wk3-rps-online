@@ -1,27 +1,21 @@
 require 'sinatra/base'
-require 'rps.bkend'
+require_relative 'rps.bkend'
 require 'byebug'
 
 class RockPaperScissor < Sinatra::Base
 
 rps = RockPaperScissorGame.new
 
-  get '/' do
-    "<form action='/' method='post'>
-      <input type='submit' name='choice' value='rock'>
-      <input type='submit' name='choice' value='paper'>
-      <input type='submit' name='choice' value='scissors'>
-    </form>"
+  get '/*' do
+    @rounds = params[:splat].sample
+    erb :gamepage
   end
 
   post '/' do
-    compchoice = RockPaperScissorGame.random_choice
-    outcome = rps.choose(params[:choice].to_sym, compchoice)
-    if outcome == :tie
-      "The computer chose #{compchoice.to_s}. Game was a tie."
-    else
-      "The computer chose #{compchoice.to_s}. #{outcome.to_s.capitalize} wins!"
-    end
+    @rounds     = (params[:rounds].to_i - 1).to_s
+    @compchoice = RockPaperScissorGame.random_choice
+    @outcome    = rps.choose(params[:choice].to_sym, @compchoice)
+    erb :gameoutcomepage, :layout => :gamepage
   end
 
   # start the server if ruby file executed directly

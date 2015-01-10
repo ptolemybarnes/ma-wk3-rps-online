@@ -1,8 +1,8 @@
 class RockPaperScissorGame
 
-  def choose choice1, choice2
-    return :tie if choice1 == choice2
-    get_winner choice1, choice2
+  def choose choices
+    return :tie if choices.uniq.size != 2
+    get_winner choices.first, choices.last
   end
 
   def get_winner choice1, choice2

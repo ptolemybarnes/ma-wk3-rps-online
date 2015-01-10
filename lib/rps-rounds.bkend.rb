@@ -1,7 +1,7 @@
 require 'rps.bkend'
 
 
-# Can play multi-round games of RPS, with names players.
+# Can play multi-round games of RPS, with named players.
 class RockPaperScissorRounds < RockPaperScissorGame
 
 attr_reader :score, :rounds_total, :names
@@ -19,7 +19,7 @@ attr_accessor :current_round
   def play_round choices = {}
     raise 'Unknown player in the game!' unless (choices.keys - names).empty?
 
-    outcome = choose(choices.values.first, choices.values.last)
+    outcome = choose(choices.values)
     choices.each {|name, choice| @score[name] += 1 if choice == outcome }
     @current_round -= 1 unless outcome == :tie
   end

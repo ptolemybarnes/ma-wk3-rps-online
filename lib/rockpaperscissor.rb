@@ -9,10 +9,10 @@ use Rack::Session::Cookie, :key => 'rack.session',
 
 rps   = RockPaperScissorGame.new
 
-  get '/*' do
+  get '/' do
     session[:computer] = 0
     session[:you] = 0
-    @rounds = params[:splat].sample
+    @rounds = params[:rounds]
 
     erb :gamepage
   end

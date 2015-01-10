@@ -14,7 +14,7 @@ module NavigationHelpers
       '/'
 
     when /the home\s?page to play "(.*)" rounds$/
-      "/#{$1}"
+      "/?rounds=#{$1}"
 
     when /the score reset page/
       "/resetscore"

@@ -1,6 +1,8 @@
-require 'sinatra/base'
-require_relative 'rps.bkend'
 require 'byebug'
+require 'sinatra/base'
+
+require_relative 'rps.bkend'
+require_relative 'rps-rounds.bkend'
 
 class RockPaperScissor < Sinatra::Base
 enable :sessions
@@ -9,25 +11,20 @@ rps   = RockPaperScissorGame.new
 #######     Routes    ########
 
   get '/' do
-    session[:score] = {you: 0, opponent: 0}
-    @rounds = params[:rounds]
+    @rounds         = params[:rounds] || 1
+    @rps_game = RockPaperScissorRounds.new(:you, :opponent)
+    @rps_game.playgame @rounds.to_i
+    session[:game_id] = @rps_game.object_id
 
     erb :gamepage
   end
 
   post '/' do
-    @rounds     = params[:rounds].to_i
     @compchoice = RockPaperScissorGame.random_choice
     @yourchoice = params[:choice].to_sym
-    @outcome    = rps.choose(@yourchoice, @compchoice)
-    
-    unless @outcome == :tie
-      @winner     = identify_winner(compchoice: @compchoice,
-                                    yourchoice: @yourchoice,
-                                    outcome:    @outcome)
-      @rounds -= 1
-      add_to_score @winner
-    end
+    @rps_game    = ObjectSpace._id2ref(session[:game_id])
+
+    @outcome    = @rps_game.play_round(you: @yourchoice, opponent: @compchoice)
 
     erb :gameoutcomepage, :layout => :gamepage
   end

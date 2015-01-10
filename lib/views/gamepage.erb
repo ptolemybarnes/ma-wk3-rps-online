@@ -1,9 +1,11 @@
-<% if @rounds.to_i > 0 %>
-Score: You, <%= session[:score][:you] %>. Opponent, <%= session[:score][:opponent] %>
-Round <%= @rounds %>: Choose!
 
-<% elsif @rounds.to_i == 0 %>
-Score: You, <%= session[:score][:you] %>. Opponent, <%= session[:score][:opponent] %>
+
+<% if @rps_game.current_round.to_i > 0 %>
+Score: You, <%= @rps_game.score[:you] %>. Opponent, <%= @rps_game.score[:opponent] %>
+Round <%= @rps_game.current_round %>: Choose!
+
+<% elsif @rps_game.current_round.to_i == 0 %>
+Score: You, <%= @rps_game.score[:you] %>. Opponent, <%= @rps_game.score[:opponent] %>
 
 <% end %>
 

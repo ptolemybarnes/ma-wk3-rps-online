@@ -38,14 +38,14 @@ Feature: Playing rock, paper, scissor
       Then I should see "Score: You, 1. Opponent, 0"
       And I press "rock" and the opponent chooses "scissors"
       Then I should not see "You are the winner!"
-      And I press "scissor" and the opponent chooses "rock"
+      And I press "scissors" and the opponent chooses "paper"
       Then I should see "You won the game!"
 
     Scenario: Opponent wins in 1 round
       Given I am on the homepage to play "1" rounds
       And I press "paper" and the opponent chooses "scissors"
       Then I should see "Score: You, 0. Opponent, 1"
-      # And I should see "The opponent is the winner!"
+      And I should see "The opponent won the game!"
 
     Scenario: Player wins in one round
       Given I am on the homepage to play "1" rounds

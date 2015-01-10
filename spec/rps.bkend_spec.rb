@@ -25,5 +25,10 @@ let(:rps) { RockPaperScissorGame.new }
     expect(rps.choose([:scissors, :scissors])).to eq :tie
   end
 
+  it 'knows when you make a choice that is not rock paper or scissor' do
+    expect(lambda { rps.choose([:rock, :banana]) }).to raise_error('Bad choice!')
+      
+  end
+
 
 end

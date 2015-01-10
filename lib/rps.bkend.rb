@@ -1,6 +1,8 @@
 class RockPaperScissorGame
 
   def choose choices
+    raise 'Bad choice!' unless (choices - [:rock, :paper, :scissors]).empty?
+
     return :tie if choices.uniq.size != 2
     get_winner choices.first, choices.last
   end

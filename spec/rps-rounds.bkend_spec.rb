@@ -56,7 +56,12 @@ let(:rps)       { RockPaperScissor.new }
     it 'knows when someone tries to make a choice who is not in the game' do
       expect(lambda {rpsrounds.play_round("tim" => :rock, "bob" => :scissors)}).to raise_error('Unknown player in the game!')
     end
-    
+
+    it 'knows when you try to play another round when there is a winner' do
+      rpsrounds.playgame 1
+      rpsrounds.play_round("tom" => :rock, "bob" => :scissors)
+      expect( lambda { rpsrounds.play_round("tom" => :rock, "bob" => :scissors) }).to raise_error('Game is over!')
+    end
   end
 
 

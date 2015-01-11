@@ -18,6 +18,7 @@ I wanted to approach this project with the concept of Minimum Viable Product in 
 
 **Skateboard:** Web page where player can choose rock, scissor, or paper.
 **Bicycle:** Player can play multi-round games.
+**Motorbike** Can play with multiple computer opponents.
 
 ## Technologies Used
 

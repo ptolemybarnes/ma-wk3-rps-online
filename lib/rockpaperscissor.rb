@@ -11,10 +11,16 @@ enable :sessions
 #######     Routes    ########
 
   get '/' do
+
+    unless ['name', 'rounds', 'player_count'].all? {|needed_val| params.key? needed_val }
+      redirect to '/newgame'
+    end
+
     name              = params[:name]
     @rounds           = params[:rounds]
     session[:names]   = [name]
-    
+
+
     params[:player_count].to_i.times do |num|
       session[:names].push ("Opponent" + (num+1).to_s)
     end
@@ -33,7 +39,7 @@ enable :sessions
     @rps_game   = ObjectSpace._id2ref(session[:game_id])
     @rps_game.clear_moves
 
-    @yourname   = params[:name].empty? ? :you : params[:name]
+    @yourname   = params[:name]
     @yourchoice = params[:choice].to_sym
 
     @rps_game.moves << [@yourname, @yourchoice]
@@ -55,7 +61,6 @@ enable :sessions
   end
 
   get '/standby' do
-
 
   end
 

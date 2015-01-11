@@ -29,5 +29,5 @@ Outcome:
 <!-- Displays outcome of game -->
 </br>
 <% if @rps_game.game.winner? %>
-<%= @rps_game.game.who_is_winner?.to_s.capitalize %> won the game!
+<%= @rps_game.game.who_is_winner? %> won the game! 
 <% end %>

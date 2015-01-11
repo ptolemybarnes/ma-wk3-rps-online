@@ -76,12 +76,7 @@ Feature: Playing rock, paper, scissor
 
 # More than two players.
 
-    Scenario: I can play a game agains two opponents with default name of "you".
-      Given I am on the newgame page
-      And I fill in "player_count" with "2"
-      Then I press "submit"
-      And I press "rock" and the opponents choose "scissors" and "scissors"
-      Then I should see "Score: You, 1. Opponent1, 0. Opponent2, 0."
+    
 
 
 

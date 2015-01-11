@@ -22,7 +22,7 @@ enable :sessions
 
     @rps_game.start_game @rounds.to_i
     
-      session[:game_id] = @rps_game.object_id
+    session[:game_id] = @rps_game.object_id
     
     erb :gamepage
   end
@@ -50,6 +50,10 @@ enable :sessions
     else
       erb :gameoutcomepage, :layout => :gamepage
     end
+  end
+
+  get '/newgame' do
+    erb :newgame
   end
 
   get '/standby' do

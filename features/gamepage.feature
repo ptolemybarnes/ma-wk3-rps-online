@@ -66,6 +66,17 @@ Feature: Playing rock, paper, scissor
       Then I should see "Score: Ptolemy, 3. Opponent, 0"
       And I should see "Ptolemy won the game!"
 
+    Scenario: I can enter my own name and a number of rounds on a newgame page.
+      Given I am on the newgame page
+      Then I should see "Enter a name:"
+      And I should see "Specify the number of rounds:"
+      And I fill in "name" with "Ptolemy"
+      And I fill in "rounds" with "3"
+      Then I press "submit"
+      And I press "rock" and the opponent chooses "scissors"
+      Then I should see "Score: Ptolemy, 1. Opponent, 0"
+
+# Multiple players
 
 
 

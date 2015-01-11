@@ -1,3 +1,4 @@
+<!-- Displays score -->
 Score:
 <ul>
   <% @rps_game.game.score.each do |name, points| %>
@@ -5,16 +6,28 @@ Score:
   <% end %>
 </ul>
 
-<% if @outcome == :tie %>
-The opponent chose <%= "#{@compchoice.to_s}" %>. 
-Game was a tie.
 
+<!-- Displays moves -->
+</br>
+Moves:
+<ul>
+  <% @rps_game.moves.each      do |name, move | %>
+    <li> <%= "#{name.to_s.capitalize} chose #{move.to_s}." %></li>
+  
+  <% end %>
+</ul>
+
+<!-- Displays outcome of round -->
+</br>
+Outcome:
+<% if @outcome == :tie %>
+  Game was a tie.
 <% else %>
-The opponent chose <%= "#{@compchoice.to_s}. #{@outcome.to_s.capitalize}" %> wins! 
+  <%= "#{@outcome.to_s.capitalize}" %> wins! 
 <% end %>
 
-
-
+<!-- Displays outcome of game -->
+</br>
 <% if @rps_game.game.winner? %>
 <%= @rps_game.game.who_is_winner?.to_s.capitalize %> won the game!
 <% end %>

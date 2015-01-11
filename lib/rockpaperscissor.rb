@@ -29,6 +29,8 @@ enable :sessions
 
   post '/' do
     @rps_game   = ObjectSpace._id2ref(session[:game_id])
+    @rps_game.clear_moves
+    
     @compchoice = RockPaperScissorGame.random_choice
     puts params
     @yourname   = params[:name].empty? ? :you : params[:name]
@@ -42,7 +44,6 @@ enable :sessions
     end
 
     @outcome    = @rps_game.play_round
-    @rps_game.clear_moves
 
     erb :gameoutcomepage, :layout => :gamepage
   end

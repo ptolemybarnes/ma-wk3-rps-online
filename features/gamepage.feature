@@ -12,22 +12,22 @@ Feature: Playing rock, paper, scissor
     Scenario: Rock versus paper
       Given I am on the homepage
       And I press "rock" and the opponent chooses "paper"
-      Then I should see "The opponent chose paper. Paper wins!"
+      Then I should see "Paper wins!"
 
     Scenario: Paper versus rock
       Given I am on the homepage
       And I press "paper" and the opponent chooses "rock"
-      Then I should see "The opponent chose rock. Paper wins!"
+      Then I should see "Paper wins!"
 
     Scenario: Scissors versus rock
       Given I am on the homepage
       And I press "scissor" and the opponent chooses "rock"
-      Then I should see "The opponent chose rock. Rock wins!"
+      Then I should see "Rock wins!"
 
     Scenario: Tie
       Given I am on the homepage
       And I press "rock" and the opponent chooses "rock"
-      Then I should see "The opponent chose rock. Game was a tie."
+      Then I should see "Game was a tie."
 
 # Multiple rounds, versus Computer
 
@@ -51,13 +51,19 @@ Feature: Playing rock, paper, scissor
       Given I am on the homepage to play "1" rounds
       And I press "rock" and the opponent chooses "scissors"
       Then I should not see "Round 0: Choose!"
+      And I should see "You won the game!"
 
 # Players can have names
 
     Scenario: Player has a name
-      Given I am on the homepage with the name "Ptolemy"
+      Given I am on the homepage with the name "Ptolemy" to play "3" rounds
       And I press "rock" and the opponent chooses "scissors"
       Then I should see "Score: Ptolemy, 1. Opponent, 0"
+      And I press "rock" and the opponent chooses "scissors"
+      Then I should see "Score: Ptolemy, 2. Opponent, 0"
+      And I press "rock" and the opponent chooses "scissors"
+      Then I should see "Score: Ptolemy, 3. Opponent, 0"
+      And I should see "Ptolemy won the game!"
 
 
 

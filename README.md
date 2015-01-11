@@ -17,6 +17,7 @@ Your task is to provide a Rock, Paper, Scissors game for them so they can play o
 I wanted to approach this project with the concept of Minimum Viable Product in mind. What I realised through discussions with other students is that the MVP concept doesn't work very well when you try to plan out the sequence (skateboard --> scooter --> etc.) in advance. For this challenge, therefore, I will try to forego making decisions about what future iterations will look like.
 
 **Skateboard:** Web page where player can choose rock, scissor, or paper.
+**Bicycle:** Player can play multi-round games.
 
 ## Technologies Used
 

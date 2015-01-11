@@ -1,3 +1,10 @@
+Score:
+<ul>
+  <% @rps_game.game.score.each do |name, points| %>
+    <li> <%= "#{name.to_s.capitalize}, #{points.to_s}." %> </li>
+  <% end %>
+</ul>
+
 <% if @outcome == :tie %>
 The opponent chose <%= "#{@compchoice.to_s}" %>. 
 Game was a tie.
@@ -6,9 +13,8 @@ Game was a tie.
 The opponent chose <%= "#{@compchoice.to_s}. #{@outcome.to_s.capitalize}" %> wins! 
 <% end %>
 
-<% if @rps_game.winner? && @rps_game.who_is_winner? == :you %>
-You won the game!
 
-<% elsif @rps_game.winner? && @rps_game.who_is_winner? == :opponent %>
-The opponent won the game!
+
+<% if @rps_game.game.winner? %>
+<%= @rps_game.game.who_is_winner?.to_s.capitalize %> won the game!
 <% end %>

@@ -45,14 +45,20 @@ Feature: Playing rock, paper, scissor
       Given I am on the homepage to play "1" rounds
       And I press "paper" and the opponent chooses "scissors"
       Then I should see "Score: You, 0. Opponent, 1"
-      And I should see "The opponent won the game!"
+      And I should see "Opponent won the game!"
 
     Scenario: Player wins in one round
       Given I am on the homepage to play "1" rounds
       And I press "rock" and the opponent chooses "scissors"
       Then I should not see "Round 0: Choose!"
 
-# Multiple players.
+# Players can have names
+
+    Scenario: Player has a name
+      Given I am on the homepage with the name "Ptolemy"
+      And I press "rock" and the opponent chooses "scissors"
+      Then I should see "Score: Ptolemy, 1. Opponent, 0"
+
 
 
 

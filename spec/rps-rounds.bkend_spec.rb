@@ -3,7 +3,7 @@ require 'rps.bkend'
 
 describe RockPaperScissorRounds do
 
-let(:rpsrounds) { RockPaperScissorRounds.new("tom", "bob") }
+let(:rpsrounds) { RockPaperScissorRounds.new(["tom", "bob"]) }
 let(:rps)       { RockPaperScissor.new }
 
   context 'the game can keep score' do

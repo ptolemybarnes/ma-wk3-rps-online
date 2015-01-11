@@ -7,7 +7,7 @@ class RockPaperScissorRounds < RockPaperScissorGame
 attr_reader :score, :rounds_total, :names
 attr_accessor :current_round
 
-  def initialize(*names)
+  def initialize(names)
     @names = names
     @score = names.map {|name| [name, 0] }.to_h
   end

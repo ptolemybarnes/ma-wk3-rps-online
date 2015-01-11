@@ -3,43 +3,50 @@ require 'sinatra/base'
 
 require_relative 'rps.bkend'
 require_relative 'rps-rounds.bkend'
+require_relative 'rps-multiplayer.bkend'
 
 class RockPaperScissor < Sinatra::Base
 enable :sessions
-rps   = RockPaperScissorGame.new
 
 #######     Routes    ########
 
   get '/' do
-    @rounds         = params[:rounds] || 1
-    @rps_game = RockPaperScissorRounds.new(:you, :opponent)
-    @rps_game.playgame @rounds.to_i
-    session[:game_id] = @rps_game.object_id
+    name              = params[:name] || :you
 
+    session[:names]   = [name, :opponent]
+    @rounds           = params[:rounds] || 1
+    
+    @rps_game         = RpsMultiplayer.new
+
+    session[:names].each {|name| @rps_game.add_player name}
+
+    @rps_game.start_game @rounds.to_i
+    
+      session[:game_id] = @rps_game.object_id
+    
     erb :gamepage
   end
 
   post '/' do
+    @rps_game   = ObjectSpace._id2ref(session[:game_id])
     @compchoice = RockPaperScissorGame.random_choice
     @yourchoice = params[:choice].to_sym
-    @rps_game    = ObjectSpace._id2ref(session[:game_id])
 
-    @outcome    = @rps_game.play_round(you: @yourchoice, opponent: @compchoice)
+    @rps_game.moves << [:you, @yourchoice]
+    @rps_game.moves << [:opponent, @compchoice]
+
+    unless @rps_game.ready?
+      redirect to('/standby')
+    end
+
+    @outcome    = @rps_game.play_round
+    @rps_game.clear_moves
 
     erb :gameoutcomepage, :layout => :gamepage
   end
 
-######## Helper Methods ########
+  get '/standby' do
 
-  helpers do
-
-    def identify_winner args
-      args[:compchoice] == args[:outcome] ? :opponent : :you
-    end
-    
-    def add_to_score winner
-      session[:score][winner] += 1
-    end
 
   end
 

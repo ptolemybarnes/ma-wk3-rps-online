@@ -53,6 +53,7 @@ Feature: Playing rock, paper, scissor
       Then I should not see "Round 0: Choose!"
       And I should see "You won the game!"
 
+
 # Players can have names
 
     Scenario: Player has a name

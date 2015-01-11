@@ -28,7 +28,7 @@ attr_accessor :current_round
   end
 
   def winner?
-    @score.values.any? {|score| score == @rounds_total }
+    @score.values.inject(:+) >= @rounds_total
   end
 
   def who_is_winner?

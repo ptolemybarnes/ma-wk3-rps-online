@@ -32,7 +32,7 @@ enable :sessions
     @rps_game.clear_moves
     
     @compchoice = RockPaperScissorGame.random_choice
-    puts params
+
     @yourname   = params[:name].empty? ? :you : params[:name]
     @yourchoice = params[:choice].to_sym
 
@@ -45,7 +45,11 @@ enable :sessions
 
     @outcome    = @rps_game.play_round
 
-    erb :gameoutcomepage, :layout => :gamepage
+    if @rps_game.game.winner?
+      erb :gameoutcomepage
+    else
+      erb :gameoutcomepage, :layout => :gamepage
+    end
   end
 
   get '/standby' do

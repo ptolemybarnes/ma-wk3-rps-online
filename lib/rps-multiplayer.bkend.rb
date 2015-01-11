@@ -1,4 +1,4 @@
-require 'rps-rounds.bkend'
+require_relative 'rps-rounds.bkend'
 
 class RpsMultiplayer
   attr_accessor :player_list, :moves

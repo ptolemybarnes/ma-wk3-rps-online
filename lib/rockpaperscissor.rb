@@ -30,9 +30,11 @@ enable :sessions
   post '/' do
     @rps_game   = ObjectSpace._id2ref(session[:game_id])
     @compchoice = RockPaperScissorGame.random_choice
+    puts params
+    @yourname   = params[:name].empty? ? :you : params[:name]
     @yourchoice = params[:choice].to_sym
 
-    @rps_game.moves << [:you, @yourchoice]
+    @rps_game.moves << [@yourname, @yourchoice]
     @rps_game.moves << [:opponent, @compchoice]
 
     unless @rps_game.ready?

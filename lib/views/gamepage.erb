@@ -1,4 +1,4 @@
-<% unless @rps_game.game.current_round == 0 %>
+<% unless @rps_game.game.current_round <= 0 %>
 Round <%= @rps_game.game.current_round %>: Choose!
 <% end %>
 
@@ -7,6 +7,7 @@ Round <%= @rps_game.game.current_round %>: Choose!
       <input type='submit' name='choice' value='rock'>
       <input type='submit' name='choice' value='paper'>
       <input type='submit' name='choice' value='scissors'>
+      <input type='hidden' name='name'   value='<%= "#{params[:name]}" %>'>
 </form>
 
 

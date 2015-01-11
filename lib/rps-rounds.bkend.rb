@@ -1,4 +1,4 @@
-require 'rps.bkend'
+require_relative 'rps.bkend'
 
 
 # Can play multi-round games of RPS, with named players.

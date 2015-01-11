@@ -35,17 +35,17 @@ Feature: Playing rock, paper, scissor
       Given I am on the homepage to play "3" rounds
       Then I should see "Round 3: Choose!"
       And I press "rock" and the opponent chooses "scissors"
-      Then I should see "Score: You, 1. Opponent, 0"
+      Then I should see "Score: You, 1. Opponent1, 0"
       And I press "rock" and the opponent chooses "scissors"
       Then I should not see "You are the winner!"
       And I press "scissors" and the opponent chooses "paper"
       Then I should see "You won the game!"
 
-    Scenario: Opponent wins in 1 round
+    Scenario: Opponent1 wins in 1 round
       Given I am on the homepage to play "1" rounds
       And I press "paper" and the opponent chooses "scissors"
-      Then I should see "Score: You, 0. Opponent, 1"
-      And I should see "Opponent won the game!"
+      Then I should see "Score: You, 0. Opponent1, 1"
+      And I should see "Opponent1 won the game!"
 
     Scenario: Player wins in one round
       Given I am on the homepage to play "1" rounds
@@ -59,24 +59,31 @@ Feature: Playing rock, paper, scissor
     Scenario: Player has a name
       Given I am on the homepage with the name "Ptolemy" to play "3" rounds
       And I press "rock" and the opponent chooses "scissors"
-      Then I should see "Score: Ptolemy, 1. Opponent, 0"
+      Then I should see "Score: Ptolemy, 1. Opponent1, 0"
       And I press "rock" and the opponent chooses "scissors"
-      Then I should see "Score: Ptolemy, 2. Opponent, 0"
+      Then I should see "Score: Ptolemy, 2. Opponent1, 0"
       And I press "rock" and the opponent chooses "scissors"
-      Then I should see "Score: Ptolemy, 3. Opponent, 0"
+      Then I should see "Score: Ptolemy, 3. Opponent1, 0"
       And I should see "Ptolemy won the game!"
 
-    Scenario: I can enter my own name and a number of rounds on a newgame page.
+    Scenario: I can enter my own name and start a game with defaults: round, 1. Opponent1's name, opponent.
       Given I am on the newgame page
-      Then I should see "Enter a name:"
-      And I should see "Specify the number of rounds:"
+      Then I should see "What's your name?"
       And I fill in "name" with "Ptolemy"
-      And I fill in "rounds" with "3"
       Then I press "submit"
       And I press "rock" and the opponent chooses "scissors"
-      Then I should see "Score: Ptolemy, 1. Opponent, 0"
+      Then I should see "Score: Ptolemy, 1. Opponent1, 0."
 
-# Multiple players
+# More than two players.
+
+    Scenario: I can play a game agains two opponents with default name of "you".
+      Given I am on the newgame page
+      And I fill in "player_count" with "2"
+      Then I press "submit"
+      And I press "rock" and the opponents choose "scissors" and "scissors"
+      Then I should see "Score: You, 1. Opponent1, 0. Opponent2, 0."
+
+
 
 
 

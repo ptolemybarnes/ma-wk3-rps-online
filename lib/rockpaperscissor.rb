@@ -11,13 +11,15 @@ enable :sessions
 #######     Routes    ########
 
   get '/' do
-    name              = params[:name] || :you
-
-    session[:names]   = [name, :opponent]
-    @rounds           = params[:rounds] || 1
+    name              = params[:name]
+    @rounds           = params[:rounds]
+    session[:names]   = [name]
     
+    params[:player_count].to_i.times do |num|
+      session[:names].push ("Opponent" + (num+1).to_s)
+    end
+  
     @rps_game         = RpsMultiplayer.new
-
     session[:names].each {|name| @rps_game.add_player name}
 
     @rps_game.start_game @rounds.to_i
@@ -30,19 +32,15 @@ enable :sessions
   post '/' do
     @rps_game   = ObjectSpace._id2ref(session[:game_id])
     @rps_game.clear_moves
-    
-    @compchoice = RockPaperScissorGame.random_choice
 
     @yourname   = params[:name].empty? ? :you : params[:name]
     @yourchoice = params[:choice].to_sym
 
     @rps_game.moves << [@yourname, @yourchoice]
-    @rps_game.moves << [:opponent, @compchoice]
-
-    unless @rps_game.ready?
-      redirect to('/standby')
+    (@rps_game.game.names - [@yourname]).each do |opponent|
+      @rps_game.moves << [opponent, RockPaperScissorGame.random_choice]
     end
-
+    
     @outcome    = @rps_game.play_round
 
     if @rps_game.game.winner?

@@ -34,4 +34,8 @@ class RpsMultiplayer
     player_list.clear
   end
 
+  def sudden_death?
+    (game.score.values.max >= game.rounds_total) and game.tie?
+  end
+
 end

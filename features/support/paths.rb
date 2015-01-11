@@ -16,11 +16,14 @@ module NavigationHelpers
     when /the home\s?page to play "(.*)" rounds$/
       "/?name=You&rounds=#{$1}&player_count=1"
 
-    when /the home\s?page with the name "(.*)"$/
+    when /the home\s?page with the name "(.^\b*)"$/
       "/?name=#{$1}&rounds=1&player_count=1"
 
-    when /the homepage with the name "(.*)" to play "(.*)" rounds/
+    when /the homepage with the name "(.*)" to play "(.*)" rounds$/
       "/?name=#{$1}&rounds=#{$2}&player_count=1"
+
+    when /the homepage with the name "(.*)" to play "(.*)" rounds with "(.*)" opponents$/
+      "/?name=#{$1}&rounds=#{$2}&player_count=#{$3}"
 
     when /the score reset page/
       "/resetscore"

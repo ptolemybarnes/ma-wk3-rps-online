@@ -28,11 +28,15 @@ attr_accessor :current_round
   end
 
   def winner?
-    @score.values.inject(:+) >= @rounds_total
+    (@score.values.max >= @rounds_total) and !tie?
   end
 
   def who_is_winner?
     @score.max_by {|name, score| score }.first
+  end
+
+  def tie?
+    @score.select {|name, points| points == @score.values.max }.size > 1
   end
 
 end

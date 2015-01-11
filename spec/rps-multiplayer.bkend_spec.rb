@@ -30,4 +30,24 @@ let(:rps) { RpsMultiplayer.new }
     expect(rps.ready?).to eq(true)
   end
 
+  it 'knows when its sudden death!' do
+    rps.add_player("John")
+    rps.add_player("Tom")
+    rps.add_player("Fred")
+    rps.start_game(3)
+    rps.moves << ["Tom", :scissors]
+    rps.moves << ["John", :rock]
+    rps.moves << ["Fred", :rock]
+    rps.play_round
+    rps.moves << ["Tom", :scissors]
+    rps.moves << ["John", :rock]
+    rps.moves << ["Fred", :rock]
+    rps.play_rounds
+    rps.moves << ["Tom", :scissors]
+    rps.moves << ["John", :rock]
+    rps.moves << ["Fred", :rock]
+    rps.play_round
+    expect(rps.sudden_death?).to eq(true)
+    end
+
 end

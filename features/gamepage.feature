@@ -76,6 +76,22 @@ Feature: Playing rock, paper, scissor
 
 # More than two players.
 
+    Scenario: Sudden death mode when two players have the target score.
+      Given I am on the homepage with the name "Ptolemy" to play "3" rounds with "2" opponents
+      And I press "paper" and the opponents choose "rock" and "rock" 
+      Then I should see "Score: Ptolemy, 1. Opponent1, 0. Opponent2, 0"
+      And I press "rock" and the opponents choose "paper" and "paper" 
+      Then I should see "Score: Ptolemy, 1. Opponent1, 1. Opponent2, 1"
+      And I press "paper" and the opponents choose "paper" and "rock"
+      Then I should see "Score: Ptolemy, 2. Opponent1, 2. Opponent2, 1"
+      And I press "paper" and the opponents choose "paper" and "rock" 
+      Then I should see "Score: Ptolemy, 3. Opponent1, 3. Opponent2, 1"
+      Then I should not see "won the game!"
+      And I should see "SUDDEN DEATH!"
+      And I press "paper" and the opponents choose "rock" and "rock"
+      Then I should see "Ptolemy won the game!"
+
+
     
 
 

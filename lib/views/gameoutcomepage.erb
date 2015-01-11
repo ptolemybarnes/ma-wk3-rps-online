@@ -29,5 +29,7 @@ Outcome:
 <!-- Displays outcome of game -->
 </br>
 <% if @rps_game.game.winner? %>
-<%= @rps_game.game.who_is_winner? %> won the game! 
+<%= @rps_game.game.who_is_winner? %> won the game!
+<% elsif @rps_game.sudden_death? %>
+SUDDEN DEATH!
 <% end %>

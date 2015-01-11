@@ -35,6 +35,7 @@ let(:rps)       { RockPaperScissor.new }
     end
 
     it 'knows when there isnt a winner' do
+      rpsrounds.playgame 3
       expect(rpsrounds.winner?).to eq(false)
     end
 
@@ -43,6 +44,16 @@ let(:rps)       { RockPaperScissor.new }
       rpsrounds.play_round("tom" => :rock, "bob" => :scissors)
       expect(rpsrounds.who_is_winner?).to eq("tom")
     end
+
+    it 'knows when the series score is or isnt tied' do
+      rpsrounds.playgame 3
+      rpsrounds.play_round("tom" => :rock, "bob" => :scissors)
+      rpsrounds.play_round("bob" => :rock, "tom" => :scissors)
+      expect(rpsrounds.tie?).to eq(true)
+      rpsrounds.play_round("bob" => :rock, "tom" => :scissors)
+      expect(rpsrounds.tie?).to eq(false)
+    end
+
   end
 
   it 'knows what round it is' do

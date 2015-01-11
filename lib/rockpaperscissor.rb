@@ -11,7 +11,6 @@ enable :sessions
 #######     Routes    ########
 
   get '/' do
-
     unless ['name', 'rounds', 'player_count'].all? {|needed_val| params.key? needed_val }
       redirect to '/newgame'
     end

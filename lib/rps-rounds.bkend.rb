@@ -21,8 +21,10 @@ attr_accessor :current_round
     raise 'Game is over!'               if winner?
 
     outcome = choose(choices.values)
-    choices.each {|name, choice| @score[name] += 1 if choice == outcome }
-    @current_round -= 1 unless outcome == :tie
+    unless outcome == :tie
+      choices.each {|name, choice| @score[name] += 1 if choice == outcome }
+      @current_round -= 1
+    end
     
     outcome
   end

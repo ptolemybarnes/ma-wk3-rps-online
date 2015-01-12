@@ -42,7 +42,7 @@ let(:rps) { RpsMultiplayer.new }
     rps.moves << ["Tom", :scissors]
     rps.moves << ["John", :rock]
     rps.moves << ["Fred", :rock]
-    rps.play_rounds
+    rps.play_round
     rps.moves << ["Tom", :scissors]
     rps.moves << ["John", :rock]
     rps.moves << ["Fred", :rock]

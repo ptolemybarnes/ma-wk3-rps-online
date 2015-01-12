@@ -21,7 +21,7 @@ class RockPaperScissor < Sinatra::Base
 #######     Routes    ########
 
   get '/' do
-    unless ['name', 'rounds', 'player_count'].all? {|needed_val| params.key? needed_val }
+    unless valid_parameters? params
       redirect to '/newgame'
     end
 
@@ -29,7 +29,7 @@ class RockPaperScissor < Sinatra::Base
     @rounds           = params[:rounds]
     session[:names]   = [name]
 
-
+    # Adds given number of players to game.
     params[:player_count].to_i.times do |num|
       session[:names].push ("Opponent" + (num+1).to_s)
     end
@@ -44,8 +44,11 @@ class RockPaperScissor < Sinatra::Base
     partial( :top ) + partial( :gamepage ) + partial( :bottom )
   end
 
+
   post '/' do
+
     @rps_game   = ObjectSpace._id2ref(session[:game_id])
+
     @rps_game.clear_moves
 
     @yourname   = params[:name]
@@ -66,11 +69,21 @@ class RockPaperScissor < Sinatra::Base
     end
   end
 
+
   get '/newgame' do
     partial( :top ) + partial( :newgame ) + partial( :bottom )
   end
 
-  get '/standby' do
+#######     HELPERS    ########
+
+  helpers do
+
+    def valid_parameters? params
+      return false unless ['name', 'rounds', 'player_count'].all? {|needed_val| params.key? needed_val }
+      return false unless (params['rounds'].to_i) and (params['player_count'].to_i > 0)
+
+      true
+    end
 
   end
 

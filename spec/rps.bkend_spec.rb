@@ -2,7 +2,7 @@ require 'rps.bkend'
 
 describe RockPaperScissorGame do
 
-let(:rps) { RockPaperScissorGame.new }
+  let(:rps) { RockPaperScissorGame.new }
 
   it 'returns rock when rock versus scissors' do
     expect(rps.choose([:scissors,:rock])).to eq :rock
@@ -29,6 +29,5 @@ let(:rps) { RockPaperScissorGame.new }
     expect(lambda { rps.choose([:rock, :banana]) }).to raise_error('Bad choice!')
       
   end
-
 
 end

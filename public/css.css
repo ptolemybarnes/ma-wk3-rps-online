@@ -8,12 +8,19 @@ html {
 #header {
   width: 100%;
   border: black solid 5px;
-  background: ;
+  background: white;
 }
 
 h1 {
   font-family: 'Sigmar One', cursive;
   font-size: 4em;
   text-align: center;
+}
+
+/*  BODY  */
+
+#contentbox {
+  margin: 30px auto;
+  width: 90%;
 }
 

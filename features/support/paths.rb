@@ -11,7 +11,7 @@ module NavigationHelpers
     case page_name
 
     when /the home\s?page$/
-      '/?name=You&rounds=1&player_count=1&human_player_count=0'
+      '/'
 
     when /the home\s?page to play "(.*)" rounds$/
       "/?name=You&rounds=#{$1}&player_count=1&human_player_count=0"
@@ -30,6 +30,9 @@ module NavigationHelpers
 
     when /the newgame page$/
       '/newgame'
+
+    when /the clearallgames page$/
+      '/clearallgames'
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

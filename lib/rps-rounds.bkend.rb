@@ -17,17 +17,21 @@ attr_accessor :current_round
   end
 
   def play_round choices = {}
-    raise 'Unknown player in the game!' unless (choices.keys - names).empty?
-    raise 'Game is over!'               if winner?
-
+    validate(choices)
     outcome = choose(choices.values)
-    unless outcome == :tie
+    round_outcome(choices, outcome) unless outcome == :tie
+    outcome
+  end
+
+    def validate choices
+      raise 'Unknown player in the game!' unless (choices.keys - names).empty?
+      raise 'Game is over!'               if winner?
+    end
+
+    def round_outcome choices, outcome
       choices.each {|name, choice| @score[name] += 1 if choice == outcome }
       @current_round -= 1
     end
-    
-    outcome
-  end
 
   def winner?
     (@score.values.max >= @rounds_total) and !tie?
@@ -40,5 +44,6 @@ attr_accessor :current_round
   def tie?
     @score.select {|name, points| points == @score.values.max }.size > 1
   end
+
 
 end

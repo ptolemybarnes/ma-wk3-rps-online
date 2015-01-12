@@ -21,9 +21,7 @@ class RockPaperScissor < Sinatra::Base
 #######     Routes    ########
 
   get '/' do
-    unless valid_parameters? params
-      redirect to '/newgame'
-    end
+    redirect to '/newgame' unless valid_parameters? params
 
     name              = params[:name]
     @rounds           = params[:rounds]
@@ -62,7 +60,6 @@ class RockPaperScissor < Sinatra::Base
     @outcome    = @rps_game.play_round
 
     if @rps_game.game.winner?
-
       partial( :top ) + partial( :gameoutcomepage ) + partial( :bottom )
     else
       partial( :top ) + partial( :gameoutcomepage ) + partial( :gamepage ) + partial( :bottom )
@@ -80,8 +77,7 @@ class RockPaperScissor < Sinatra::Base
 
     def valid_parameters? params
       return false unless ['name', 'rounds', 'player_count'].all? {|needed_val| params.key? needed_val }
-      return false unless (params['rounds'].to_i) and (params['player_count'].to_i > 0)
-
+      return false unless (params['rounds'].to_i) > 0 and (params['player_count'].to_i > 0)
       true
     end
 

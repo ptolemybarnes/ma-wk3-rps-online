@@ -16,34 +16,52 @@ class RockPaperScissor < Sinatra::Base
     set :partial_template_engine, :erb
   end
 
+engine = RpsMultiplayer.new
+engine_id = engine.object_id
+
 #######     Routes    ########
 
-  get '/' do
-    redirect to '/newgame' unless valid_parameters? params
-    @rps_game   = ObjectSpace._id2ref(session[:game_id])
-    
-    
+  get '/newgame' do
+    partial( :top ) + partial( :newgame ) + partial( :bottom )
+  end
 
-    name              = params[:name]
-    @rounds           = params[:rounds]
-    session[:names]   = [name]
+  post '/gamesetup' do
+    @rps_game   = ObjectSpace._id2ref(engine_id)
+    redirect to '/newgame' unless valid_parameters? params
+
+    @rps_game.add_player params[:name]
+
+    redirect to '/waiting' if     @rps_game.game_in_progress
 
     # Adds given number of computer players to game.
-    params[:player_count].to_i.times do |num|
-      session[:names].push ("Opponent" + (num+1).to_s)
+    params[:computer_player_count].to_i.times do |num|
+      @rps_game.add_player ("Opponent" + (num+1).to_s)
     end
-  
-    
-    session[:names].each {|name| @rps_game.add_player name}
 
+
+    @rps_game.player_cap       = params[:computer_player_count].to_i + params[:human_player_count].to_i
+    @rps_game.round_num        = params[:rounds].to_i
+    @rps_game.game_in_progress = true
+
+    redirect to '/waiting'
+  end
+
+  get '/waiting' do
+    puts "REDIRECTED"
+    @rps_game   = ObjectSpace._id2ref(engine_id)
+    redirect to('/') if @rps_game.game_ready?
+    erb :waitingpage
+  end
+
+# 
+
+  get '/' do
     # unless @rps_game.player_count == (params[:player_count].to_i + params[:human_player_count].to_i)
     #   redirect to('/waiting')
     # end
 
+    @rps_game   = ObjectSpace._id2ref(session[:game_id])
     @rps_game.start_game @rounds.to_i
-    
-    
-    
     partial( :top ) + partial( :gamepage ) + partial( :bottom )
   end
 
@@ -72,18 +90,14 @@ class RockPaperScissor < Sinatra::Base
   end
 
 
-  get '/newgame' do
-    session[:game_id] = RpsMultiplayer.new.object_id
-    partial( :top ) + partial( :newgame ) + partial( :bottom )
-  end
 
 #######     HELPERS    ########
 
   helpers do
 
     def valid_parameters? params
-      return false unless ['name', 'rounds', 'player_count'].all? {|needed_val| params.key? needed_val }
-      return false unless (params['rounds'].to_i) > 0 and (params['player_count'].to_i > 0)
+      return false unless ['name', 'rounds', 'computer_player_count', 'human_player_count'].all? {|needed_val| params.key? needed_val }
+      return false unless (params['rounds'].to_i) > 0 and (params['computer_player_count'].to_i > 0) and (params['human_player_count'].to_i > 0)
       true
     end
 

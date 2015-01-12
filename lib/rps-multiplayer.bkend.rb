@@ -1,21 +1,26 @@
 require_relative 'rps-rounds.bkend'
 
 class RpsMultiplayer
-  attr_accessor :player_list, :moves
+  attr_accessor :player_list, :moves, :round_num, :game_in_progress, :player_cap
   attr_reader   :game
 
   def initialize
-    @player_list = []
-    @moves       = []
+    @player_list      = []
+    @moves            = []
+    @game_in_progress = false
   end
 
   def add_player(name)
     player_list << name
   end
 
-  def start_game(rounds)
+  def game_ready?
+    player_list.size >= player_cap
+  end
+
+  def start_game
     @game = RockPaperScissorRounds.new(player_list)
-    @game.playgame(rounds)
+    @game.playgame(round_num)
   end
 
   def ready?

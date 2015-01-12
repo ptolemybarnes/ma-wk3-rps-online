@@ -1,12 +1,22 @@
 require 'byebug'
 require 'sinatra/base'
+require 'sinatra/partial'
 
 require_relative 'rps.bkend'
 require_relative 'rps-rounds.bkend'
 require_relative 'rps-multiplayer.bkend'
 
 class RockPaperScissor < Sinatra::Base
-enable :sessions
+  set :public_dir, Proc.new{File.join(root, '..', "public")}
+  set :public_folder, 'public'
+  enable :sessions
+
+  configure do
+    register Sinatra::Partial
+    set :partial_template_engine, :erb
+  end
+
+
 
 #######     Routes    ########
 
@@ -31,7 +41,7 @@ enable :sessions
     
     session[:game_id] = @rps_game.object_id
     
-    erb :gamepage
+    partial( :top ) + partial( :gamepage ) + partial( :bottom )
   end
 
   post '/' do
@@ -49,14 +59,15 @@ enable :sessions
     @outcome    = @rps_game.play_round
 
     if @rps_game.game.winner?
-      erb :gameoutcomepage
+
+      partial( :top ) + partial( :gameoutcomepage ) + partial( :bottom )
     else
-      erb :gameoutcomepage, :layout => :gamepage
+      partial( :top ) + partial( :gameoutcomepage ) + partial( :gamepage ) + partial( :bottom )
     end
   end
 
   get '/newgame' do
-    erb :newgame
+    partial( :top ) + partial( :newgame ) + partial( :bottom )
   end
 
   get '/standby' do

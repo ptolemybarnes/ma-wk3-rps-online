@@ -1,0 +1,19 @@
+
+html {
+  
+}
+
+/* HEADER */
+
+#header {
+  width: 100%;
+  border: black solid 5px;
+  background: ;
+}
+
+h1 {
+  font-family: 'Sigmar One', cursive;
+  font-size: 4em;
+  text-align: center;
+}
+

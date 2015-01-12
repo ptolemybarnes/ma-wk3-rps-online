@@ -27,23 +27,29 @@ I wanted to approach this project with the concept of Minimum Viable Product in 
 - Cucumber
 - RSpec
 
-## Job List
-
-- [ ]
-- [ ]
-- [ ]
-- [ ]
-
 ## Favourite Code Snippet
 
 ~~~
-
+<% elsif @rps_game.sudden_death? %>
+SUDDEN DEATH!
+<% end %>
 ~~~
 
 
 ## Still to complete/refactor
 
-- [ ]
+- Multiplayer branch
 - [ ]
 
 ## Takeaway
+
+I was happy with how I had build my Rock Paper Scissor classes largely open to extension (from simple one round-game, to multi-round games, to multiplayer games). This allowed me to introduce new functionality to the back end as they developed within the context of Cucumber's BDD workflow. This reached a hard-limit, however, when it came to integrating multiple computer players with multiple human players. I found that because I had implemented players simply as strings of player names, there was no clean way of distinguishing between human players and computer players. Additionally, as my coach on this project pointed out, players could easily input the same name.
+
+The takeaway from this is that if there is every any doubt about whether to turn responsibility over to a new class at the initial stages of Domain modelling, it is better to err on the side of caution rather than have to go through the painful process of remodelling later.
+
+
+
+
+
+
+

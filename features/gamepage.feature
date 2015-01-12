@@ -42,6 +42,9 @@ Feature: Playing rock, paper, scissor
       And I press "submit"
       Given I am on the newgame page
       Then I should see "Game 1"
+      And I press "joingame"
+      Then I should see "Choose!"
+
 
 
 

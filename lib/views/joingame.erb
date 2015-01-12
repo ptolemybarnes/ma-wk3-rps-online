@@ -1,4 +1,13 @@
 Join game! <br>
-<% GAME_ENGINES.each_with_index do |game, index| %>
-  Game <%= index+1 %>
-<% end %>
+<form action='/addmetogame' method='post'>
+
+  <ul>
+    <% GAME_ENGINES.each_with_index do |game, index| %>
+
+      <li>"Game <%= index+1 %> <input type='submit' id="joingame" name='engine_id' value="<%= game.object_id %>"></li>
+
+    <% end %>
+    <input type='text' name='name'>
+  </ul>
+
+</form>

@@ -32,9 +32,11 @@ GAME_ENGINES = []
 
   post '/gamesetup' do
     redirect to '/newgame' unless valid_parameters? params
+    
     @rps_game           = RpsMultiplayer.new
     GAME_ENGINES << @rps_game
     session[:engine_id] = @rps_game.object_id
+    session[:name]      = params[:name]
     
     # Adds given number of computer players to game.
     params[:computer_player_count].to_i.times do |num|
@@ -44,12 +46,23 @@ GAME_ENGINES = []
     @rps_game.player_cap       = params[:computer_player_count].to_i + params[:human_player_count].to_i
     @rps_game.round_num        = params[:rounds].to_i
 
-    redirect to "/waiting?#{params[:name]}"
+    @rps_game.add_player session[:name]
+
+    redirect to "/waiting"
+  end
+
+  post '/addmetogame' do
+    session[:engine_id] = params[:engine_id].to_i
+    session[:name]      = params[:name]
+
+    @rps_game   = ObjectSpace._id2ref(session[:engine_id])
+    @rps_game.add_player params[:name]
+
+    redirect "/waiting"
   end
 
   get '/waiting' do
     @rps_game   = ObjectSpace._id2ref(session[:engine_id])
-    @rps_game.add_player params[:name]
 
     if @rps_game.game_ready?
       @rps_game.game_in_progress = true
@@ -67,22 +80,16 @@ GAME_ENGINES = []
     partial( :top ) + partial( :gamepage ) + partial( :bottom )
   end
 
-
   post '/' do
-
     @rps_game   = ObjectSpace._id2ref(session[:engine_id])
+    @rps_game.moves << [session[:name], params[:choice].to_sym]
 
-    @rps_game.clear_moves
+    until @rps_game.ready?
 
-    @yourname   = params[:name]
-    @yourchoice = params[:choice].to_sym
-
-    @rps_game.moves << [@yourname, @yourchoice]
-    (@rps_game.game.names - [@yourname]).each do |opponent|
-      @rps_game.moves << [opponent, RockPaperScissorGame.random_choice]
     end
-    
+
     @outcome    = @rps_game.play_round
+    @rps_game.clear_moves
 
     if @rps_game.game.winner?
       partial( :top ) + partial( :gameoutcomepage ) + partial( :bottom )

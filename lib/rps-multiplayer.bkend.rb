@@ -38,4 +38,8 @@ class RpsMultiplayer
     (game.score.values.max >= game.rounds_total) and game.tie?
   end
 
+  def player_count
+    player_list.size
+  end
+
 end

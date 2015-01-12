@@ -10,6 +10,12 @@ let(:rps) { RpsMultiplayer.new }
     expect(rps.player_list).to eq(["John", "Tom"])
   end
 
+  it 'knows how many players there are' do
+    rps.add_player("John")
+    rps.add_player("Tom")
+    expect(rps.player_count).to eq(2)
+  end
+
   it 'can play a game of Rps with 3 rounds' do
     rps.start_game(3)
   end

@@ -11,19 +11,19 @@ module NavigationHelpers
     case page_name
 
     when /the home\s?page$/
-      '/?name=You&rounds=1&player_count=1'
+      '/?name=You&rounds=1&player_count=1&human_player_count=0'
 
     when /the home\s?page to play "(.*)" rounds$/
-      "/?name=You&rounds=#{$1}&player_count=1"
+      "/?name=You&rounds=#{$1}&player_count=1&human_player_count=0"
 
     when /the home\s?page with the name "(.^\b*)"$/
-      "/?name=#{$1}&rounds=1&player_count=1"
+      "/?name=#{$1}&rounds=1&player_count=1&human_player_count=0"
 
     when /the homepage with the name "(.*)" to play "(.*)" rounds$/
-      "/?name=#{$1}&rounds=#{$2}&player_count=1"
+      "/?name=#{$1}&rounds=#{$2}&player_count=1&human_player_count=0"
 
     when /the homepage with the name "(.*)" to play "(.*)" rounds with "(.*)" opponents$/
-      "/?name=#{$1}&rounds=#{$2}&player_count=#{$3}"
+      "/?name=#{$1}&rounds=#{$2}&player_count=#{$3}&human_player_count=0"
 
     when /the score reset page/
       "/resetscore"

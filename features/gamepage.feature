@@ -9,6 +9,9 @@ Feature: Playing rock, paper, scissor
 
   # Single round, versus Computer
 
+  Background:
+    Given I am on the newgame page
+
     Scenario: Rock versus paper
       Given I am on the homepage
       And I press "rock" and the opponent chooses "paper"
@@ -90,6 +93,14 @@ Feature: Playing rock, paper, scissor
       And I should see "SUDDEN DEATH!"
       And I press "paper" and the opponents choose "rock" and "rock"
       Then I should see "Ptolemy won the game!"
+
+# Adding a human opponent.
+    Scenario: I am on the newgame page and want to add a human opponent.
+      Given I am on the newgame page
+      Then I should see "How many human opponents?"
+      And I fill in "human_player_count" with "1"
+      And I press "submit"
+      Then I should see "Waiting for human opponent to join..."
 
 
     

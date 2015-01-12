@@ -16,28 +16,33 @@ class RockPaperScissor < Sinatra::Base
     set :partial_template_engine, :erb
   end
 
-
-
 #######     Routes    ########
 
   get '/' do
     redirect to '/newgame' unless valid_parameters? params
+    @rps_game   = ObjectSpace._id2ref(session[:game_id])
+    
+    
 
     name              = params[:name]
     @rounds           = params[:rounds]
     session[:names]   = [name]
 
-    # Adds given number of players to game.
+    # Adds given number of computer players to game.
     params[:player_count].to_i.times do |num|
       session[:names].push ("Opponent" + (num+1).to_s)
     end
   
-    @rps_game         = RpsMultiplayer.new
+    
     session[:names].each {|name| @rps_game.add_player name}
+
+    # unless @rps_game.player_count == (params[:player_count].to_i + params[:human_player_count].to_i)
+    #   redirect to('/waiting')
+    # end
 
     @rps_game.start_game @rounds.to_i
     
-    session[:game_id] = @rps_game.object_id
+    
     
     partial( :top ) + partial( :gamepage ) + partial( :bottom )
   end
@@ -68,6 +73,7 @@ class RockPaperScissor < Sinatra::Base
 
 
   get '/newgame' do
+    session[:game_id] = RpsMultiplayer.new.object_id
     partial( :top ) + partial( :newgame ) + partial( :bottom )
   end
 
